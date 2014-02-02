@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:id="@+id/mainLayout"
+    android:layout_height="fill_parent" 
+    android:layout_width="fill_parent" 
+    android:stretchColumns="1">
+
+    <TableRow android:layout_marginBottom="12dip">
+        <TextView android:text="Add a Product" 
+            android:id="@+id/addProductLabel" 
+            android:layout_span="2"
+            android:textSize="26sp" 
+            android:padding="6dip"
+            android:textStyle="bold" />
+    </TableRow>
+
+    <TableRow android:layout_marginTop="18dip">
+        <Button android:text="Scanner" 
+            android:id="@+id/scanButton" 
+            android:layout_span="2" 
+            android:textSize="20sp" />
+    </TableRow>
+
+    <TableRow>
+        <TextView android:id="@+id/barcodeLabel" 
+            android:text="Barcode:" 
+            android:padding="3dip"
+            android:textSize="20sp" />
+        <EditText android:id="@+id/barcodeEdit" 
+            android:padding="3dip" />
+    </TableRow>
+
+    <TableRow>
+        <TextView android:id="@+id/codeFormatLabel" 
+            android:text="Format:" 
+            android:padding="3dip"
+            android:textSize="20sp" />
+        <EditText android:id="@+id/codeFormatEdit" 
+            android:padding="3dip" />
+    </TableRow>
+
+    <TableRow android:layout_marginTop="6dip">
+        <TextView android:id="@+id/titleLabel" 
+            android:text="Title:" 
+            android:padding="3dip" 
+            android:textSize="20sp" />
+        <EditText android:id="@+id/titleEdit" android:padding="3dip" />
+    </TableRow>
+
+    <TableRow android:layout_marginTop="6dip">
+        <TextView android:id="@+id/priceLabel" 
+            android:text="Price:" 
+            android:padding="3dip" 
+            android:textSize="20sp" />
+        <EditText android:id="@+id/priceEdit" 
+            android:inputType="numberDecimal"
+            android:padding="3dip" />
+    </TableRow>
+
+    <TableRow android:layout_marginTop="18dip">
+        <Button android:text="Add Product" 
+           android:id="@+id/addButton"
+           android:layout_span="2"
+           android:textSize="20sp" />
+    </TableRow>
+</TableLayout>
