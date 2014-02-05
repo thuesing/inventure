@@ -2,7 +2,7 @@ package com.thuesing.inventurelean;
 
 import java.math.BigDecimal;
 
-import com.thuesing.inventurelean.MainActivity.ProductData;
+import com.thuesing.inventurelean.MainActivity.ItemData;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -16,11 +16,10 @@ import android.widget.Toast;
 
 public class AddProduct extends Activity implements OnClickListener {
     private static final int REQUEST_BARCODE = 0;
-    private static final ProductData mProductData = new ProductData();
+    private static final ItemData mProductData = new ItemData();
 	private EditText mBarcodeEdit;
-	private EditText mFormatEdit;
 	private EditText mTitleEdit;
-	private EditText mPriceEdit;
+	private EditText mWeightEdit;
 	private Button mScanButton;
 	private Button mAddButton;
 
@@ -32,9 +31,9 @@ public class AddProduct extends Activity implements OnClickListener {
         setContentView(R.layout.add_product);
 
         mBarcodeEdit = (EditText) findViewById(R.id.barcodeEdit);
-        mFormatEdit = (EditText) findViewById(R.id.codeFormatEdit);
         mTitleEdit = (EditText) findViewById(R.id.titleEdit);
-        mPriceEdit = (EditText) findViewById(R.id.priceEdit);
+        mWeightEdit = (EditText) findViewById(R.id.weightEdit);
+        
         mScanButton = (Button) findViewById(R.id.scanButton);
         mScanButton.setOnClickListener(this);
         mAddButton = (Button) findViewById(R.id.addButton);
@@ -52,26 +51,23 @@ public class AddProduct extends Activity implements OnClickListener {
 	            break;
 	        case R.id.addButton:
 	            String barcode = mBarcodeEdit.getText().toString();
-	            String format = mFormatEdit.getText().toString();
 	            String title = mTitleEdit.getText().toString();
-	            String price = mPriceEdit.getText().toString();
+	            String weight = mWeightEdit.getText().toString();
 
-	            String errors = validateFields(barcode, format, title, price);
+	            String errors = validateFields(barcode, title, weight);
 	            if (errors.length() > 0) {
 	               // thue: not defined
 	            	// showInfoDialog(this, "Please fix errors", errors);
 	            	Toast.makeText(getApplicationContext(), "Please fix: " + errors, Toast.LENGTH_LONG).show();
 	            } else {
 	                mProductData.barcode = barcode;
-	                mProductData.format = format;
 	                mProductData.title = title;
-	                mProductData.price = new BigDecimal(price);
+
                     
 	                // TODO
 	                // mProductDb.insert(mProductData);
 	                
-	                // thue: not defined
-	                // showInfoDialog(this, "Success", "Product saved successfully");
+	                // thue: not defined, // showInfoDialog(this, "Success", "Product saved successfully");
 	            	Toast.makeText(getApplicationContext(), "Success: Data saved successfully", Toast.LENGTH_LONG).show();
 	         	   
 	                resetForm();
@@ -86,32 +82,27 @@ public class AddProduct extends Activity implements OnClickListener {
             if (resultCode == RESULT_OK) {
                 String barcode = intent.getStringExtra("SCAN_RESULT");
                 mBarcodeEdit.setText(barcode);
-
-                String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
-                mFormatEdit.setText(format);
+                // String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
+                // mFormatEdit.setText(format);
             } else if (resultCode == RESULT_CANCELED) {
                 finish();
             }
         }
     }
     
-    private static String validateFields(String barcode, String format, String title, String price) {
+    private static String validateFields(String barcode, String title, String weight) {
     	    StringBuilder errors = new StringBuilder();
 
     	    if (barcode.matches("^\\s*$")) {
     	        errors.append("Barcode required\n");
     	    }
 
-    	    if (format.matches("^\\s*$")) {
-    	        errors.append("Format required\n");
-    	    }
-
     	    if (title.matches("^\\s*$")) {
     	        errors.append("Title required\n");
     	    }
 
-    	    if (!price.matches("^-?\\d+(.\\d+)?$")) {
-    	        errors.append("Need numeric price\n");
+    	    if (!weight.matches("^-?\\d+(.\\d+)?$")) {
+    	        errors.append("Need numeric weight\n");
     	    }
 
     	    return errors.toString();
@@ -119,9 +110,9 @@ public class AddProduct extends Activity implements OnClickListener {
     
     private void resetForm() {
         mBarcodeEdit.setText(""); 
-        mFormatEdit.setText(""); 
+        mWeightEdit.setText(""); 
         mTitleEdit.setText(""); 
-        mPriceEdit.setText(""); 		
+	
 	}
 
     

@@ -30,15 +30,6 @@
             android:padding="3dip" />
     </TableRow>
 
-    <TableRow>
-        <TextView android:id="@+id/codeFormatLabel" 
-            android:text="Format:" 
-            android:padding="3dip"
-            android:textSize="20sp" />
-        <EditText android:id="@+id/codeFormatEdit" 
-            android:padding="3dip" />
-    </TableRow>
-
     <TableRow android:layout_marginTop="6dip">
         <TextView android:id="@+id/titleLabel" 
             android:text="Title:" 
@@ -48,17 +39,17 @@
     </TableRow>
 
     <TableRow android:layout_marginTop="6dip">
-        <TextView android:id="@+id/priceLabel" 
-            android:text="Price:" 
+        <TextView android:id="@+id/weightLabel" 
+            android:text="Weight:" 
             android:padding="3dip" 
             android:textSize="20sp" />
-        <EditText android:id="@+id/priceEdit" 
+        <EditText android:id="@+id/weightEdit" 
             android:inputType="numberDecimal"
             android:padding="3dip" />
     </TableRow>
 
     <TableRow android:layout_marginTop="18dip">
-        <Button android:text="Add Product" 
+        <Button android:text="Save data" 
            android:id="@+id/addButton"
            android:layout_span="2"
            android:textSize="20sp" />

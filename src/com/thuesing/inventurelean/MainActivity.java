@@ -33,11 +33,11 @@ public class MainActivity extends Activity {
 		return true;
 	}
 
-	static final class ProductData {
+	static final class ItemData {
 	    String barcode;
-	    String format;
 	    String title;
-	    BigDecimal price;
+	    Integer weight;
+	    String created_at;
 	}
 	
 

@@ -2,7 +2,7 @@ package com.thuesing.inventurelean;
 
 import java.math.BigDecimal;
 
-import com.thuesing.inventurelean.MainActivity.ProductData;
+import com.thuesing.inventurelean.MainActivity.ItemData;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -10,8 +10,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class ProductDatabase {
-    private static final String PRODUCT_TABLE = "products"; 
-    private static final String DATABASE_NAME = "spot_pay.db";
+    private static final String PRODUCT_TABLE = "results"; 
+    private static final String DATABASE_NAME = "inventure.db";
     private static final int DATABASE_VERSION = 1;
 
     private SQLiteDatabase db;
@@ -22,12 +22,11 @@ public class ProductDatabase {
         db = helper.getWritableDatabase();
     }
     
-    public boolean insert(ProductData product) {
+    public boolean insert(ItemData product) {
         ContentValues vals = new ContentValues();
         vals.put("barcode", product.barcode);
-        vals.put("format", product.format);
         vals.put("title", product.title);
-        vals.put("price", product.price.multiply(new BigDecimal(100)).longValue());
+        vals.put("weight", product.weight);
 
         return db.insert(PRODUCT_TABLE, null, vals) != -1;
     }    
@@ -46,9 +45,9 @@ public class ProductDatabase {
                 .append("(  ")
                 .append("   _id integer primary key,")
                 .append("   barcode text,")
-                .append("   format text,")
+                .append("   created_at text,")
                 .append("   title text,")
-                .append("   price currency")
+                .append("   weight integer")
                 .append(")  ");
 
             db.execSQL(sql.toString());         
