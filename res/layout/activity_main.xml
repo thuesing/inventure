@@ -11,6 +11,14 @@
         android:textSize="26sp" 
         android:padding="6dip" 
         android:textStyle="bold" />
+    <TextView
+        android:id="@+id/textWeight"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|center_horizontal|center"
+        android:textSize="@dimen/big_font"
+        android:textStyle="bold"
+        android:text="Place item on the scale" />
 
     <Button android:id="@+id/addMenuButton"
         android:text="Add Product" 
