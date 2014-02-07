@@ -1,6 +1,5 @@
 package com.thuesing.inventurelean;
 
-import java.math.BigDecimal;
 import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -27,6 +26,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
+	public final static String TAG = "InventureMain";
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,19 +36,8 @@ public class MainActivity extends Activity {
 		initButtons();
 		initUsb();
 		updateVisuals();        
-        
-        
-        Button addButton = (Button) findViewById(R.id.addMenuButton);
-        addButton.setOnClickListener(new OnClickListener() {            
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, AddProduct.class));
-            }
-        });
     }
  
- 
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -63,7 +53,10 @@ public class MainActivity extends Activity {
 	}
 	
 	
-	/* Scale running */
+	/* 
+	 * Scale running 
+	 * 
+	 */
 	
 
 	private UsbScale mScale;
@@ -115,7 +108,22 @@ public class MainActivity extends Activity {
 			}
 		});
 		*/
-		
+        Button addButton = (Button) findViewById(R.id.addProductButton);
+        addButton.setOnClickListener(new OnClickListener() {            
+            @Override
+            public void onClick(View v) {    
+            	int weight = getWeight();
+            	Log.d(TAG, "putExtra " + weight + " - thuesing");
+            	Intent i = new Intent(MainActivity.this, AddProduct.class);
+            	i.putExtra("com.thuesing.inventure.weight", weight);            	
+                startActivity(i);
+            }
+        });	
+	
+	}
+	
+	private int getWeight() {
+		return this.value;
 	}
 	
 	public void initUsb() {

@@ -20,7 +20,7 @@
         android:textStyle="bold"
         android:text="Place item on the scale" />
 
-    <Button android:id="@+id/addMenuButton"
+    <Button android:id="@+id/addProductButton"
         android:text="Add Product" 
         android:layout_width="fill_parent"    
         android:layout_height="wrap_content"

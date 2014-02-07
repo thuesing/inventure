@@ -1,7 +1,5 @@
 package com.thuesing.inventurelean;
 
-import java.math.BigDecimal;
-
 import com.thuesing.inventurelean.MainActivity.ItemData;
 
 import android.content.ContentValues;

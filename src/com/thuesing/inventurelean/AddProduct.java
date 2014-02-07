@@ -7,6 +7,7 @@ import com.thuesing.inventurelean.MainActivity.ItemData;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -15,6 +16,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class AddProduct extends Activity implements OnClickListener {
+	public final static String TAG = "InventureAddProduct";
     private static final int REQUEST_BARCODE = 0;
     private static final ItemData mProductData = new ItemData();
 	private EditText mBarcodeEdit;
@@ -38,6 +40,11 @@ public class AddProduct extends Activity implements OnClickListener {
         mScanButton.setOnClickListener(this);
         mAddButton = (Button) findViewById(R.id.addButton);
         mAddButton.setOnClickListener(this);
+        
+        Integer weight = getIntent().getIntExtra("com.thuesing.inventure.weight", 0);
+      	Log.d(TAG, "getIntExtra " +  weight + " - thuesing");
+      	mWeightEdit.setText(weight.toString());
+        
         // mProductDb = new ProductDatabase(this); // not yet shown
     }
     
@@ -56,13 +63,12 @@ public class AddProduct extends Activity implements OnClickListener {
 
 	            String errors = validateFields(barcode, title, weight);
 	            if (errors.length() > 0) {
-	               // thue: not defined
-	            	// showInfoDialog(this, "Please fix errors", errors);
+	              	// showInfoDialog(this, "Please fix errors", errors);  // thue: not defined
 	            	Toast.makeText(getApplicationContext(), "Please fix: " + errors, Toast.LENGTH_LONG).show();
 	            } else {
 	                mProductData.barcode = barcode;
 	                mProductData.title = title;
-
+	                mProductData.weight = new Integer(weight);
                     
 	                // TODO
 	                // mProductDb.insert(mProductData);
