@@ -24,6 +24,7 @@ public class AddProduct extends Activity implements OnClickListener {
 	private EditText mWeightEdit;
 	private Button mScanButton;
 	private Button mAddButton;
+	private ProductDatabase mProductDb;
 
     // private fields omitted
 
@@ -45,7 +46,7 @@ public class AddProduct extends Activity implements OnClickListener {
       	Log.d(TAG, "getIntExtra " +  weight + " - thuesing");
       	mWeightEdit.setText(weight.toString());
         
-        // mProductDb = new ProductDatabase(this); // not yet shown
+        mProductDb = new ProductDatabase(this); 
     }
     
     @Override
@@ -69,10 +70,8 @@ public class AddProduct extends Activity implements OnClickListener {
 	                mProductData.barcode = barcode;
 	                mProductData.title = title;
 	                mProductData.weight = new Integer(weight);
-                    
-	                // TODO
-	                // mProductDb.insert(mProductData);
-	                
+
+	                mProductDb.insert(mProductData);	                
 	                // thue: not defined, // showInfoDialog(this, "Success", "Product saved successfully");
 	            	Toast.makeText(getApplicationContext(), "Success: Data saved successfully", Toast.LENGTH_LONG).show();
 	         	   

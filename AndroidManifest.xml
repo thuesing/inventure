@@ -36,6 +36,10 @@
             android:name="com.thuesing.inventurelean.AddProduct"
             android:label="@string/title_activity_add_product" >
         </activity>
+        <activity
+            android:name="com.thuesing.inventurelean.ListViewActivity"
+            android:label="@string/title_activity_list_view" >
+        </activity>
     </application>
 
 </manifest>

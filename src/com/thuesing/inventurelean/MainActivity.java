@@ -3,6 +3,7 @@ package com.thuesing.inventurelean;
 import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Iterator;
+
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,12 +33,12 @@ public class MainActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 		initButtons();
 		initUsb();
 		updateVisuals();        
     }
- 
+
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -119,6 +120,18 @@ public class MainActivity extends Activity {
                 startActivity(i);
             }
         });	
+        
+        Button listButton = (Button) findViewById(R.id.showProductListButton);
+        listButton.setOnClickListener(new OnClickListener() {            
+            @Override
+            public void onClick(View v) {    
+            	int weight = getWeight();
+            	Log.d(TAG, "call ListViewIntend - thuesing");         
+        		Intent intent = new Intent(MainActivity.this, ListViewActivity.class);
+        		startActivity(intent);
+            }
+        });	       
+        
 	
 	}
 	
