@@ -55,9 +55,10 @@ public class ExportDatabaseCSVTask extends AsyncTask<String, Void, Boolean> {
             file.createNewFile();
             CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
             Cursor curCSV = db.fetchDataAll();
-            csvWrite.writeNext(curCSV.getColumnNames());
+            //csvWrite.writeNext(curCSV.getColumnNames());
+            String cplNames[] ={ProductDatabase.KEY_TITLE,ProductDatabase.KEY_BARCODE,ProductDatabase.KEY_WEIGHT};
             while(curCSV.moveToNext()) { // 0 is _id, so start at 1
-                String arrStr[] ={curCSV.getString(1),curCSV.getString(2),curCSV.getString(3)};
+                String arrStr[] ={curCSV.getString(2),curCSV.getString(1),curCSV.getString(3)};
                 csvWrite.writeNext(arrStr);
             }
             csvWrite.close();

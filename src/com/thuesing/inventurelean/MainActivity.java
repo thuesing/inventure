@@ -34,7 +34,7 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	public final static String TAG = "InventureMain";
-	protected static final String URI = null;
+	//protected static final String URI = null;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -146,6 +146,35 @@ public class MainActivity extends Activity {
 	            try {
 
 	                new ExportDatabaseCSVTask(MainActivity.this).execute("");	
+	           
+	                String email = "t.huesing@gmx.de";
+	                String subject = "New Inventure CSV";
+	                String message = "Have fun!";
+                  
+                    final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);                    
+                    //emailIntent.setType("plain/text");
+                    emailIntent.setType( "message/rfc822");
+                    //emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] { email });
+                    emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,  subject);
+                    emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, message); 
+                    
+                    
+                    File exportDir = new File(Environment.getExternalStorageDirectory(), "InventureApp");     
+                    File file = new File(exportDir, "InventureApp.csv");
+                    if (!file.exists() || !file.canRead()) {
+                        Toast.makeText(MainActivity.this, "Attachment Error", Toast.LENGTH_SHORT).show();
+                        finish();
+                        return;
+                    }
+                    Uri fileUri = Uri.fromFile(file);              
+                    Log.d(TAG, "File URI " + fileUri + " - thuesing"); 
+                    
+                    if (fileUri != null) {
+                           emailIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
+                    }                   
+
+                    startActivity(Intent.createChooser(emailIntent,"Sending email..."));	                
+	              
                    
               } catch (Throwable t) {
                     Toast.makeText(MainActivity.this,"Request failed try again: " + t.toString(), Toast.LENGTH_LONG).show();
