@@ -48,6 +48,11 @@ public class ProductDatabase {
         		new String[] {KEY_ROWID, KEY_BARCODE, KEY_TITLE, KEY_WEIGHT}, null, null, null, null, null);
     }
     
+    public Cursor rawQuery(String q) {
+    	Log.d(TAG, "raw query" + q + " - thuesing");
+        return db.rawQuery(q ,null);
+    }
+    
     private static class ProductDatabaseHelper extends SQLiteOpenHelper {
 
         public ProductDatabaseHelper(Context context) {
@@ -55,7 +60,7 @@ public class ProductDatabase {
         }
         
         @Override
-        public void onCreate(SQLiteDatabase db) {            
+        public void onCreate(SQLiteDatabase db) {            //
             StringBuilder sql = new StringBuilder();
 
             sql.append("create table ").append(PRODUCT_TABLE)

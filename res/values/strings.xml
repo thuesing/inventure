@@ -8,4 +8,6 @@
     <string name="title_activity_list_view">ListViewActivity</string>
     <string name="no_data">No Data Yet</string>
     <string name="button_list">Show result list</string>
+    <string name="title_activity_export_csv">ExportCsvActivity</string>
+
 </resources>

@@ -27,10 +27,16 @@
         android:textSize="20sp"
         android:layout_marginTop="18dip"/>
      
-     <Button
+    <Button
         android:id="@+id/showProductListButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Show Data" 
         android:onClick="showProductList" />
+     
+    <Button
+        android:id="@+id/exportProductListButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Export CSV"/>
 </LinearLayout>

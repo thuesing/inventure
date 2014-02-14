@@ -1,11 +1,17 @@
 package com.thuesing.inventurelean;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.nio.ByteBuffer;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.PowerManager;
 import android.annotation.TargetApi;
@@ -28,6 +34,7 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	public final static String TAG = "InventureMain";
+	protected static final String URI = null;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -130,8 +137,23 @@ public class MainActivity extends Activity {
         		Intent intent = new Intent(MainActivity.this, ListViewActivity.class);
         		startActivity(intent);
             }
-        });	       
+        });	 
         
+        Button exportButton = (Button) findViewById(R.id.exportProductListButton);
+        exportButton.setOnClickListener(new OnClickListener() {            
+            @Override        
+	        public void onClick(View v) {
+	            try {
+
+	                new ExportDatabaseCSVTask(MainActivity.this).execute("");	
+                   
+              } catch (Throwable t) {
+                    Toast.makeText(MainActivity.this,"Request failed try again: " + t.toString(), Toast.LENGTH_LONG).show();
+                    Log.e("Error in MainActivity",t.toString());
+              }	                
+
+	        }
+        });	        
 	
 	}
 	
@@ -233,7 +255,6 @@ public class MainActivity extends Activity {
 	private void updateVisuals() {
 		
 	}
-	
-	
+
 
 }

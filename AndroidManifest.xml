@@ -7,9 +7,11 @@
     <uses-sdk
         android:minSdkVersion="12"
         android:targetSdkVersion="18" />
-    
+
     <uses-feature android:name="android.hardware.usb.host" />
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -24,13 +26,13 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            
             <intent-filter>
                 <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
             </intent-filter>
 
-            <meta-data android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" android:resource="@xml/device_filter" />
-            
+            <meta-data
+                android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED"
+                android:resource="@xml/device_filter" />
         </activity>
         <activity
             android:name="com.thuesing.inventurelean.AddProduct"
@@ -39,6 +41,10 @@
         <activity
             android:name="com.thuesing.inventurelean.ListViewActivity"
             android:label="@string/title_activity_list_view" >
+        </activity>
+        <activity
+            android:name="com.thuesing.inventurelean.ExportCsvActivity"
+            android:label="@string/title_activity_export_csv" >
         </activity>
     </application>
 
