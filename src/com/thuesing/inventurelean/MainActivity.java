@@ -100,22 +100,23 @@ public class MainActivity extends Activity {
 	
 	public void onPause() {
 		super.onPause();
-		//mHandler.removeCallbacks(mUpdateWeight);
+		mHandler.removeCallbacks(mUpdateWeight);
 		if (wl != null) {
 			 wl.release();
 			 wl = null;
 		}
 	}
+	
+	@Override
+	protected void onStop() {
+	    super.onStop();  // Always call the superclass method first
+	    if(mConnection != null) {
+	    	mConnection.close();
+	    }
+	}
 
 	private void initButtons() {
-		/*
-		Button b = (Button) findViewById(R.id.button1);
-		b.setOnClickListener(new OnClickListener() {
-			public void onClick(View v) {
-				Toast.makeText(getApplicationContext(), "ground_beef", Toast.LENGTH_LONG).show();
-			}
-		});
-		*/
+
         Button addButton = (Button) findViewById(R.id.addProductButton);
         addButton.setOnClickListener(new OnClickListener() {            
             @Override
@@ -198,7 +199,7 @@ public class MainActivity extends Activity {
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR1)
 	public void getUsbDevice() {
 		
-		//Log.d("findingDevices", " - wubbahed");
+		Log.d(TAG, "findingDevices");
 		HashMap<String, UsbDevice> deviceList = mUsbManager.getDeviceList();
 		Iterator<UsbDevice> deviceIterator = deviceList.values().iterator();
 		while (deviceIterator.hasNext()) {
