@@ -16,12 +16,17 @@
 
 package com.thuesing.inventurelean;
 
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.Toast;
 
 public class ListViewActivity extends ListActivity {
 	private static final String TAG = "InventureListView";
@@ -39,7 +44,7 @@ public class ListViewActivity extends ListActivity {
 
     
     private void clearData() {
-    	// TODO mProductDb.
+    	mProductDb.clearAllProducts();
     }
     
    
@@ -61,7 +66,41 @@ public class ListViewActivity extends ListActivity {
 
     }
    
-    
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.list_view, menu);		
+		return true;
+	} 
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    switch (item.getItemId()) {
+	    case R.id.clear_all:
+
+	    	new AlertDialog.Builder(this)
+	        .setIcon(android.R.drawable.ic_dialog_alert)
+	        .setTitle(R.string.clear_list)
+	        .setMessage(R.string.really_clear_list)
+	        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+
+	            @Override
+	            public void onClick(DialogInterface dialog, int which) {
+                    clearData();
+                    Toast.makeText(ListViewActivity.this,"All items deleted!", Toast.LENGTH_LONG).show();
+                    ListViewActivity.this.finish();
+                    //startActivity(getIntent());
+	            }
+
+	        })
+	        .setNegativeButton(R.string.no, null)
+	        .show();
+	    	
+	    	
+	        return true;
+	    default:
+	        return super.onOptionsItemSelected(item);
+	    }
+	}
     
     
     

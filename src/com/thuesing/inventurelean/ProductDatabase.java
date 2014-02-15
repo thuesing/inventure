@@ -48,9 +48,14 @@ public class ProductDatabase {
         		new String[] {KEY_ROWID, KEY_BARCODE, KEY_TITLE, KEY_WEIGHT}, null, null, null, null, null);
     }
     
-    public Cursor rawQuery(String q) {
+    public Cursor rawQuery(String q) { // TODO
     	Log.d(TAG, "raw query" + q + " - thuesing");
         return db.rawQuery(q ,null);
+    }
+    
+    public void clearAllProducts() {
+    	Log.d(TAG, "clearAllProducts - thuesing");
+    	db.execSQL("delete from " + PRODUCT_TABLE);  
     }
     
     private static class ProductDatabaseHelper extends SQLiteOpenHelper {
