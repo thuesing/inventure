@@ -16,11 +16,16 @@
 
 package com.thuesing.inventurelean;
 
+import java.io.File;
+
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -75,6 +80,48 @@ public class ListViewActivity extends ListActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
+	    
+ 	    case R.id.send_mail:
+
+	          try {
+	
+	                new ExportDatabaseCSVTask(ListViewActivity.this).execute("");	
+	           
+	                String subject = "New Inventure CSV";
+	                String message = "Have fun!";
+	              
+	                final Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);                    
+	                //emailIntent.setType("plain/text");
+	                emailIntent.setType( "message/rfc822");
+	                //emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, new String[] { email });
+	                emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT,  subject);
+	                emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, message); 
+	                
+	                
+	                File exportDir = new File(Environment.getExternalStorageDirectory(), "InventureApp");     
+	                File file = new File(exportDir, "InventureApp.csv");
+	                if (!file.exists() || !file.canRead()) {
+	                    Toast.makeText(ListViewActivity.this, "Attachment Error", Toast.LENGTH_SHORT).show();
+	                    finish();
+	                    return true;
+	                }
+	                Uri fileUri = Uri.fromFile(file);              
+	                Log.d(TAG, "File URI " + fileUri + " - thuesing"); 
+	                
+	                if (fileUri != null) {
+	                       emailIntent.putExtra(Intent.EXTRA_STREAM, fileUri);
+	                }                   
+	
+	                startActivity(Intent.createChooser(emailIntent,"Sending email..."));	                
+	              
+	               
+	          } catch (Throwable t) {
+	                Toast.makeText(ListViewActivity.this,"Request failed try again: " + t.toString(), Toast.LENGTH_LONG).show();
+	                Log.e("Error in MainActivity",t.toString());
+	          }	  
+    		
+    		return true;
+	    
 	    case R.id.clear_all:
 
 	    	new AlertDialog.Builder(this)
@@ -105,6 +152,8 @@ public class ListViewActivity extends ListActivity {
     
     
 }
+
+
 
 
 

@@ -13,7 +13,9 @@ import android.os.Handler;
 import android.os.PowerManager;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
@@ -23,6 +25,7 @@ import android.hardware.usb.UsbManager;
 import android.hardware.usb.UsbRequest;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -128,7 +131,7 @@ public class AddProduct extends Activity implements OnClickListener {
 	    }
 
 	    return errors.toString();
-}
+    }
     
     private void resetForm() {
     	
@@ -137,6 +140,26 @@ public class AddProduct extends Activity implements OnClickListener {
         mTitleEdit.setText(""); 
 	
 	}
+    
+    
+ 	public boolean onCreateOptionsMenu(Menu menu) {
+ 		// Inflate the menu; this adds items to the action bar if it is present.
+ 		getMenuInflater().inflate(R.menu.add_product, menu);		
+ 		return true;
+ 	} 
+ 	
+ 	@Override
+ 	public boolean onOptionsItemSelected(MenuItem item) {
+ 	    switch (item.getItemId()) {
+ 	    case R.id.show_data:
+    		Intent intent = new Intent(AddProduct.this, ListViewActivity.class);
+    		startActivity(intent); 	 	    	
+ 	        return true;
+ 	    default:
+ 	        return super.onOptionsItemSelected(item);
+ 	    }
+ 	}
+    
     
     /*
      * Scale
@@ -287,6 +310,8 @@ public class AddProduct extends Activity implements OnClickListener {
 	        }
 			
 	}
+	
+	
 
 
     
