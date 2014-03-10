@@ -13,7 +13,19 @@
             android:padding="6dip"
             android:textStyle="bold" />
     </TableRow>
-
+         
+    <TableRow android:layout_marginBottom="12dip">    
+        <TextView
+	        android:id="@+id/textWeight"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center_vertical|center_horizontal|center"
+	        android:textSize="32sp"
+	        android:padding="6dip"
+	        android:textStyle="bold"
+	        android:text="Place item on the scale" />
+    </TableRow>
+    
     <TableRow android:layout_marginTop="18dip">
         <Button android:text="Scanner" 
             android:id="@+id/scanButton" 
