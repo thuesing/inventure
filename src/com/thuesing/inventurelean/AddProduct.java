@@ -73,7 +73,7 @@ public class AddProduct extends Activity implements OnClickListener, OnItemClick
       	mTitleEdit = (AutoCompleteTextView) findViewById(R.id.titleEdit);
          
         //Create adapter   
-      	mTitles = mProductDb.getTitlesAll();
+      	mTitles = mProductDb.getProductTitlesAll();
       	mTitleAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, mTitles);         
         mTitleEdit.setThreshold(1);
          
@@ -117,11 +117,12 @@ public class AddProduct extends Activity implements OnClickListener, OnItemClick
 	                mProductData.barcode = barcodeValue;
 	                mProductData.title = titleValue;
 	                mProductData.weight = new Integer(weightValue);
-
-	                mProductDb.insert(mProductData);	                
-	                // thue: not defined, // showInfoDialog(this, "Success", "Product saved successfully");
-	            	Toast.makeText(getApplicationContext(), "Success: Data saved successfully", Toast.LENGTH_LONG).show();
-	         	   
+	                if(mProductDb.insertInventurData(mProductData) == true) {	                
+	                	Toast.makeText(getApplicationContext(), "Success: Data saved successfully", Toast.LENGTH_LONG).show();
+	                } else {
+	                	Toast.makeText(getApplicationContext(), "Failure: Sorry, something  went wrong", Toast.LENGTH_LONG).show();
+	                }
+	                
 	                resetForm();
 	            }
 	            break;
@@ -135,10 +136,10 @@ public class AddProduct extends Activity implements OnClickListener, OnItemClick
 	        case R.id.titleForBarcodeButton:
 	        	Log.d(TAG, "getTitleForBarcodeButton " +  barcodeValue + " - thuesing");
 	           	
-                String titleFromDb = mProductDb.getTitleForBarcode(barcodeValue);	
+                String titleFromDb = mProductDb.getProducTitleForBarcode(barcodeValue);	
                 if(titleFromDb != null && !titleFromDb.isEmpty()) {
                 	mTitleEdit.setText(titleFromDb);
-                    Toast.makeText(getApplicationContext(), "Success. Title found.", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), "Success. Title found.", Toast.LENGTH_LONG).show();
                 } else {
                  	Toast.makeText(getApplicationContext(), "No title found.", Toast.LENGTH_LONG).show();
                 }

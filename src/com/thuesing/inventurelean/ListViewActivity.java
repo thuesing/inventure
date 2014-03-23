@@ -49,14 +49,14 @@ public class ListViewActivity extends ListActivity {
 
     
     private void clearData() {
-    	mProductDb.clearAllProducts();
+    	mProductDb.clearInventurData();
     }
     
    
     @SuppressWarnings("deprecation")
 	private void getData() {
         // Get all of the notes from the database and create the item list
-        Cursor c = mProductDb.fetchDataAll();
+        Cursor c = mProductDb.fetchInventurDataAll();
         
         Log.d("ListViewActivity",  "cursor count: " + c.getCount() + " - thuesing");   
         
