@@ -33,22 +33,22 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
-public class ListViewActivity extends ListActivity {
+public class DataListViewActivity extends ListActivity {
 	private static final String TAG = "InventureListView";
-    private ProductDatabase mProductDb;
+    private AppDatabase mProductDb;
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.inventur_list);
-        mProductDb = new ProductDatabase(this); 
-        Log.d(TAG,  "ListViewActivity onCreate - thuesing");   
+        mProductDb = new AppDatabase(this); 
+        Log.d(TAG,  "DataListViewActivity onCreate - thuesing");   
         getData();
     }
 
     
-    private void clearData() {
+    private void clearInventurData() {
     	mProductDb.clearInventurData();
     }
     
@@ -58,22 +58,22 @@ public class ListViewActivity extends ListActivity {
         // Get all of the notes from the database and create the item list
         Cursor c = mProductDb.fetchInventurDataAll();
         
-        Log.d("ListViewActivity",  "cursor count: " + c.getCount() + " - thuesing");   
+        Log.d("DataListViewActivity",  "cursor count: " + c.getCount() + " - thuesing");   
         
         startManagingCursor(c);
 
-        String[] from = new String[] { ProductDatabase.KEY_BARCODE , ProductDatabase.KEY_TITLE , ProductDatabase.KEY_WEIGHT};
+        String[] from = new String[] { AppDatabase.KEY_BARCODE , AppDatabase.KEY_TITLE , AppDatabase.KEY_WEIGHT};
         int[] to = new int[] { R.id.barcode , R.id.title ,R.id.weight };
         
         // Now create an array adapter and set it to display using our row
-        SimpleCursorAdapter results = new SimpleCursorAdapter(this, R.layout.inventur_row, c, from, to);
-        setListAdapter(results);
-
+        SimpleCursorAdapter results = new SimpleCursorAdapter(this, R.layout.data_row, c, from, to);
+        setListAdapter(results); 
+        //c.close();
     }
    
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.list_view, menu);		
+		getMenuInflater().inflate(R.menu.data_list_view, menu);		
 		return true;
 	} 
 	
@@ -85,7 +85,7 @@ public class ListViewActivity extends ListActivity {
 
 	          try {
 	
-	                new ExportDatabaseCSVTask(ListViewActivity.this).execute("");	
+	                new ExportDatabaseCSVTask(DataListViewActivity.this).execute("");	
 	           
 	                String subject = "New Inventure CSV";
 	                String message = "Have fun!";
@@ -101,7 +101,7 @@ public class ListViewActivity extends ListActivity {
 	                File exportDir = new File(Environment.getExternalStorageDirectory(), "InventureApp");     
 	                File file = new File(exportDir, "InventureApp.csv");
 	                if (!file.exists() || !file.canRead()) {
-	                    Toast.makeText(ListViewActivity.this, "Attachment Error", Toast.LENGTH_SHORT).show();
+	                    Toast.makeText(DataListViewActivity.this, "Attachment Error", Toast.LENGTH_SHORT).show();
 	                    finish();
 	                    return true;
 	                }
@@ -116,7 +116,7 @@ public class ListViewActivity extends ListActivity {
 	              
 	               
 	          } catch (Throwable t) {
-	                Toast.makeText(ListViewActivity.this,"Request failed try again: " + t.toString(), Toast.LENGTH_LONG).show();
+	                Toast.makeText(DataListViewActivity.this,"Request failed try again: " + t.toString(), Toast.LENGTH_LONG).show();
 	                Log.e("Error in MainActivity",t.toString());
 	          }	  
     		
@@ -132,9 +132,9 @@ public class ListViewActivity extends ListActivity {
 
 	            @Override
 	            public void onClick(DialogInterface dialog, int which) {
-                    clearData();
-                    Toast.makeText(ListViewActivity.this,"All items deleted!", Toast.LENGTH_LONG).show();
-                    ListViewActivity.this.finish();
+                    clearInventurData();
+                    Toast.makeText(DataListViewActivity.this,"All items deleted!", Toast.LENGTH_LONG).show();
+                    DataListViewActivity.this.finish();
                     //startActivity(getIntent());
 	            }
 

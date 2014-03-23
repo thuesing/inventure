@@ -27,13 +27,13 @@ import android.widget.Toast;
 public class ExportDatabaseCSVTask extends AsyncTask<String, Void, Boolean> {
 	private static final String TAG = "InventureExportTask";
 	private ProgressDialog dialog; 
-	private ProductDatabase db;
+	private AppDatabase db;
     private Context context;
     
     public ExportDatabaseCSVTask(Context con) {
     	 this.context = con;
     	 dialog = new ProgressDialog(con);
-         db = new ProductDatabase(con);  	 
+         db = new AppDatabase(con);  	 
     }
 
     @Override
@@ -56,7 +56,7 @@ public class ExportDatabaseCSVTask extends AsyncTask<String, Void, Boolean> {
             CSVWriter csvWrite = new CSVWriter(new FileWriter(file));
             Cursor curCSV = db.fetchInventurDataAll();
             //csvWrite.writeNext(curCSV.getColumnNames());
-            String cplNames[] ={ProductDatabase.KEY_TITLE,ProductDatabase.KEY_BARCODE,ProductDatabase.KEY_WEIGHT};
+            String cplNames[] ={AppDatabase.KEY_TITLE,AppDatabase.KEY_BARCODE,AppDatabase.KEY_WEIGHT};
             while(curCSV.moveToNext()) { // 0 is _id, so start at 1
                 String arrStr[] ={curCSV.getString(2),curCSV.getString(1),curCSV.getString(3)};
                 csvWrite.writeNext(arrStr);

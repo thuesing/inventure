@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
-import com.thuesing.inventurelean.MainActivity.ItemData;
+import com.thuesing.inventurelean.AppDatabase.ItemData;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -37,7 +37,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 
-public class AddProduct extends Activity implements OnClickListener, OnItemClickListener, OnItemSelectedListener {
+public class ScaleActivity extends Activity implements OnClickListener, OnItemClickListener, OnItemSelectedListener {
 	public final static String TAG = "InventureAddProduct";
     private static final int REQUEST_BARCODE = 0;
     private static final ItemData mProductData = new ItemData();
@@ -47,7 +47,7 @@ public class AddProduct extends Activity implements OnClickListener, OnItemClick
 	private Button mScanButton;
 	private Button mAddButton;
 	private Button mTitleForBarcodeButton;
-	private ProductDatabase mProductDb;
+	private AppDatabase mProductDb;
     private ArrayAdapter<String> mTitleAdapter;
     private ArrayList<String> mTitles;
 	
@@ -56,7 +56,7 @@ public class AddProduct extends Activity implements OnClickListener, OnItemClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_product);
         
-        mProductDb = new ProductDatabase(this); 
+        mProductDb = new AppDatabase(this); 
 
         mBarcodeEdit = (EditText) findViewById(R.id.barcodeEdit);
        // mTitleEdit = (EditText) findViewById(R.id.titleEdit);
@@ -81,16 +81,15 @@ public class AddProduct extends Activity implements OnClickListener, OnItemClick
         mTitleEdit.setAdapter(mTitleAdapter);
         mTitleEdit.setOnItemSelectedListener(this);
         mTitleEdit.setOnItemClickListener(this);
-        // end AC	       
-
-        
-        // Scale
-        Integer weight = getIntent().getIntExtra("com.thuesing.inventure.weight", 0);
-      	Log.d(TAG, "getIntExtra " +  weight + " - thuesing");
+        // end AC	
         mWeightEdit = (EditText) findViewById(R.id.weightEdit);
-      	mWeightEdit.setText(weight.toString());        
-        
+
+        /*  // Scale deactivated
+        Integer weight = getIntent().getIntExtra("com.thuesing.inventure.weight", 0);
+      	Log.d(TAG, "getIntExtra " +  weight + " - thuesing");        
+      	mWeightEdit.setText(weight.toString()); 
 		initUsb();
+		*/
     }
     
     @Override
@@ -126,13 +125,13 @@ public class AddProduct extends Activity implements OnClickListener, OnItemClick
 	                resetForm();
 	            }
 	            break;
-	            
+	        /* deactivated    
 	        case R.id.captureWeightButton:
 	           	TextView tw = (TextView) findViewById(R.id.textWeight);
 	           	String textWeight = (String) tw.getText();
 	           	mWeightEdit.setText(textWeight);
 	            break;	
-	            
+	        */    
 	        case R.id.titleForBarcodeButton:
 	        	Log.d(TAG, "getTitleForBarcodeButton " +  barcodeValue + " - thuesing");
 	           	
@@ -219,22 +218,28 @@ public class AddProduct extends Activity implements OnClickListener, OnItemClick
  	
  	@Override
  	public boolean onOptionsItemSelected(MenuItem item) {
+ 		Intent intent;
  	    switch (item.getItemId()) {
  	    case R.id.show_data:
-    		Intent intent = new Intent(AddProduct.this, ListViewActivity.class);
+    		intent = new Intent(ScaleActivity.this, DataListViewActivity.class);
     		startActivity(intent); 	 	    	
  	        return true;
+ 	    case R.id.show_products:
+    		intent = new Intent(ScaleActivity.this, ProductListViewActivity.class);
+    		startActivity(intent); 	 	    	
+ 	        return true; 	        
  	    default:
  	        return super.onOptionsItemSelected(item);
  	    }
  	}
-    
+ 
+
     
     /*
      * Scale
      */
     
-
+    /*
 
 	private UsbScale mScale;
 	private UsbDevice mDevice;
@@ -380,7 +385,7 @@ public class AddProduct extends Activity implements OnClickListener, OnItemClick
 			
 	}
 	
-	
+	*/
 
 
     

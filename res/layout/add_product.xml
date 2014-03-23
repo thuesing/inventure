@@ -5,7 +5,7 @@
     android:layout_width="fill_parent" 
     android:stretchColumns="1">
 
-      
+  <!--   Scale deactivated
     <TableRow android:layout_marginBottom="12dip">    
         <TextView android:id="@+id/scaleWeightLabel" 
             android:text="Weight from scale:" 
@@ -28,16 +28,9 @@
             android:layout_span="2" 
             android:textSize="15sp" />
     </TableRow>
-    
-   <TableRow android:layout_marginTop="6dip">
-        <TextView android:id="@+id/weightLabel" 
-            android:text="Captured Weight:" 
-            android:padding="3dip" 
-            android:textSize="15sp" />
-        <EditText android:id="@+id/weightEdit" 
-            android:inputType="numberDecimal"
-            android:padding="3dip" />
-    </TableRow>
+   -->
+   
+
     
     <TableRow android:layout_marginTop="18dip">
         <Button android:text="Scanner" 
@@ -70,6 +63,16 @@
         <AutoCompleteTextView android:id="@+id/titleEdit" 
             android:padding="3dip" />
     </TableRow>
+    
+   <TableRow android:layout_marginTop="6dip">
+        <TextView android:id="@+id/weightLabel" 
+            android:text="Weight:" 
+            android:padding="3dip" 
+            android:textSize="15sp" />
+        <EditText android:id="@+id/weightEdit" 
+            android:inputType="numberDecimal"
+            android:padding="3dip" />
+    </TableRow>    
 
     <TableRow android:layout_marginTop="18dip">
         <Button android:text="Save data" 

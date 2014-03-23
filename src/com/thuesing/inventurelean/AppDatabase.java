@@ -3,8 +3,6 @@ package com.thuesing.inventurelean;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.thuesing.inventurelean.MainActivity.ItemData;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -12,7 +10,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-public class ProductDatabase {
+public class AppDatabase {
 
     private static final String TAG = "InventureProductDb";
     private static final String INVENTUR_TABLE = "results"; 
@@ -26,8 +24,8 @@ public class ProductDatabase {
 
     private SQLiteDatabase db;
     
-    public ProductDatabase(Context context) {
-    	Log.d(TAG,  "ProductDatabase Constructor - thuesing");       	
+    public AppDatabase(Context context) {
+    	Log.d(TAG,  "AppDatabase Constructor - thuesing");       	
         ProductDatabaseHelper helper = new ProductDatabaseHelper(context);
         db = helper.getWritableDatabase();
     }
@@ -67,6 +65,12 @@ public class ProductDatabase {
         		new String[] {KEY_ROWID, KEY_BARCODE, KEY_TITLE, KEY_WEIGHT}, null, null, null, null, null);
     }
 
+    
+    public Cursor fetchProductDataAll() {
+    	Log.d(TAG, "fetch all - thuesing");
+        return db.query(PRODUCT_TABLE, 
+        		new String[] {KEY_ROWID, KEY_BARCODE, KEY_TITLE}, null, null, null, null, null);
+    }
     
     public String getProducTitleForBarcode(String barcode) { 	
     	Log.d(TAG, "getProducTitleForBarcode " + barcode + " - thuesing");
@@ -108,9 +112,21 @@ public class ProductDatabase {
     	db.execSQL("delete from " + INVENTUR_TABLE);  
     } 
     
+    public void clearProductData() {
+    	Log.d(TAG, "clearProductData - thuesing");
+    	db.execSQL("delete from " + PRODUCT_TABLE);  
+    } 
+    
     public void close() {
         db.close();
     }
+    
+	static final class ItemData {
+	    String barcode;
+	    String title;
+	    Integer weight;
+	    String created_at;
+	}
   
     private static class ProductDatabaseHelper extends SQLiteOpenHelper {
 

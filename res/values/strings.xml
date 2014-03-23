@@ -4,13 +4,14 @@
     <string name="app_name">Inventure App</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-    <string name="title_activity_add_product">Add an item</string>
-    <string name="title_activity_list_view">Your item list</string>
-    <string name="no_data">No Data Yet</string>
+    <string name="title_activity_add_product">Enter data</string>
+    <string name="title_data_list_view">Your data</string>
+    <string name="title_product_list_view">Your products</string>
+    <string name="no_data">No data</string>
     <string name="button_list">Show your items</string>
-    <string name="title_activity_export_csv">Export item list</string>
-    <string name="clear_list">Delete all items</string>
-    <string name="really_clear_list">This will delete all the items, that are currently in your list. Are you sure?</string>
+    <string name="title_activity_export_csv">Export data</string>
+    <string name="clear_list">Delete data</string>
+    <string name="really_clear_list">This will delete all the data, that are currently in your list. Are you sure?</string>
     <string name="yes">Yes</string>
 	<string name="no">Cancel</string>
 </resources>
