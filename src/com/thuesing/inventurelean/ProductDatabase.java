@@ -1,5 +1,8 @@
 package com.thuesing.inventurelean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.thuesing.inventurelean.MainActivity.ItemData;
 
 import android.content.ContentValues;
@@ -66,6 +69,20 @@ public class ProductDatabase {
     	cursor.close();
     	return title;    	
     }
+    
+    public ArrayList<String> getTitlesAll() { 	
+    	Log.d(TAG, "getTitlesAll - thuesing");    	
+    	ArrayList titles = new ArrayList();  
+    	Cursor cursor = db.rawQuery("select " + KEY_TITLE + " from " 
+    								+ PRODUCT_TABLE, null);     	
+    	cursor.moveToFirst();
+    	while(!cursor.isAfterLast()) {
+    	     titles.add(cursor.getString(cursor.getColumnIndex(KEY_TITLE))); 
+    	     cursor.moveToNext();
+    	}
+    	cursor.close();   
+    	return titles;    	
+    }   
     
     public void clearAllProducts() {
     	Log.d(TAG, "clearAllProducts - thuesing");

@@ -1,7 +1,7 @@
 package com.thuesing.inventurelean;
 
-import java.math.BigDecimal;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -13,9 +13,7 @@ import android.os.Handler;
 import android.os.PowerManager;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbDeviceConnection;
@@ -51,48 +49,40 @@ public class AddProduct extends Activity implements OnClickListener, OnItemClick
 	private Button mTitleForBarcodeButton;
 	private ProductDatabase mProductDb;
     private ArrayAdapter<String> mTitleAdapter;
+    private ArrayList<String> mTitles;
 	
-    //These values show in autocomplete
-    String item[]={
-              "January", "February", "March", "April",
-              "May", "June", "July", "August",
-              "September", "October", "November", "December"
-            };
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_product);
+        
+        mProductDb = new ProductDatabase(this); 
 
         mBarcodeEdit = (EditText) findViewById(R.id.barcodeEdit);
        // mTitleEdit = (EditText) findViewById(R.id.titleEdit);
-
         
         mScanButton = (Button) findViewById(R.id.scanButton);
         mScanButton.setOnClickListener(this);
         mAddButton = (Button) findViewById(R.id.addButton);
         mAddButton.setOnClickListener(this);
         mTitleForBarcodeButton = (Button) findViewById(R.id.titleForBarcodeButton);
-        mTitleForBarcodeButton.setOnClickListener(this);
-        
-
+        mTitleForBarcodeButton.setOnClickListener(this);       
       	
         // Initialize AutoCompleteTextView 
 
       	mTitleEdit = (AutoCompleteTextView) findViewById(R.id.titleEdit);
          
-        //Create adapter    
-      	mTitleAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, item);
-         
+        //Create adapter   
+      	mTitles = mProductDb.getTitlesAll();
+      	mTitleAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, mTitles);         
         mTitleEdit.setThreshold(1);
          
        //Set adapter to AutoCompleteTextView
         mTitleEdit.setAdapter(mTitleAdapter);
         mTitleEdit.setOnItemSelectedListener(this);
         mTitleEdit.setOnItemClickListener(this);
-        // end AC	
-        
-        mProductDb = new ProductDatabase(this); 
+        // end AC	       
+
         
         // Scale
         Integer weight = getIntent().getIntExtra("com.thuesing.inventure.weight", 0);
@@ -162,28 +152,21 @@ public class AddProduct extends Activity implements OnClickListener, OnItemClick
             long arg3) {
         // TODO Auto-generated method stub
         //Log.d("AutocompleteContacts", "onItemSelected() position " + position);
+    	Log.d(TAG, "onItemSelected - thuesing");
     }
  
     @Override
     public void onNothingSelected(AdapterView<?> arg0) {
-        // TODO Auto-generated method stub
-         
-        InputMethodManager imm = (InputMethodManager) getSystemService(
-                INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        // TODO Auto-generated method stub         
+        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
  
     }
  
     @Override
     public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-        // TODO Auto-generated method stub
-         
-        // Show Alert       
-        Toast.makeText(getBaseContext(), "Position:"+arg2+" Month:"+arg0.getItemAtPosition(arg2),
-                Toast.LENGTH_LONG).show();
-         
-        Log.d("AutocompleteContacts", "Position:"+arg2+" Month:"+arg0.getItemAtPosition(arg2));
-         
+        // TODO Auto-generated method stub      
+        Log.d(TAG, "onItemSelected: " + arg0.getItemAtPosition(arg2)  + " - thuesing");         
     }    
     
 
