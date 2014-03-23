@@ -53,11 +53,25 @@ public class ProductDatabase {
         return db.rawQuery(q ,null);
     }
     
+    public String getTitleForBarcode(String barcode) { 	
+    	Log.d(TAG, "getTitleForBarcode " + barcode + " - thuesing");
+  
+    	Cursor cursor = db.rawQuery("select " + KEY_TITLE + " from " 
+    								+ PRODUCT_TABLE + " where " 
+    								+ KEY_BARCODE + " = ?", new String[] { barcode.trim() }); 
+    	
+    	cursor.moveToFirst();    	
+    	int columnIndex = cursor.getColumnIndexOrThrow(KEY_TITLE);    	
+    	String title = cursor.getString(columnIndex);    	
+    	cursor.close();
+    	return title;    	
+    }
+    
     public void clearAllProducts() {
     	Log.d(TAG, "clearAllProducts - thuesing");
     	db.execSQL("delete from " + PRODUCT_TABLE);  
-    }
-    
+    }  
+  
     private static class ProductDatabaseHelper extends SQLiteOpenHelper {
 
         public ProductDatabaseHelper(Context context) {

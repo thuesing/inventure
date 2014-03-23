@@ -42,6 +42,7 @@ public class AddProduct extends Activity implements OnClickListener {
 	private EditText mWeightEdit;
 	private Button mScanButton;
 	private Button mAddButton;
+	private Button mTitleForBarcodeButton;
 	private ProductDatabase mProductDb;
 
     // private fields omitted
@@ -59,6 +60,8 @@ public class AddProduct extends Activity implements OnClickListener {
         mScanButton.setOnClickListener(this);
         mAddButton = (Button) findViewById(R.id.addButton);
         mAddButton.setOnClickListener(this);
+        mTitleForBarcodeButton = (Button) findViewById(R.id.titleForBarcodeButton);
+        mTitleForBarcodeButton.setOnClickListener(this);
         
         Integer weight = getIntent().getIntExtra("com.thuesing.inventure.weight", 0);
       	Log.d(TAG, "getIntExtra " +  weight + " - thuesing");
@@ -71,25 +74,30 @@ public class AddProduct extends Activity implements OnClickListener {
     
     @Override
     public void onClick(View v) {
+    	
+        String barcodeValue = mBarcodeEdit.getText().toString();
+        String titleValue = mTitleEdit.getText().toString();
+        String weightValue = mWeightEdit.getText().toString();
+
+    	
+    	
         switch (v.getId()) {
 	        case R.id.scanButton:
 	            Intent intent = new Intent("com.google.zxing.client.android.SCAN");
 	            intent.putExtra("SCAN_MODE", "PRODUCT_MODE");
 	            startActivityForResult(intent, REQUEST_BARCODE);
 	            break;
+	            
 	        case R.id.addButton:
-	            String barcode = mBarcodeEdit.getText().toString();
-	            String title = mTitleEdit.getText().toString();
-	            String weight = mWeightEdit.getText().toString();
 
-	            String errors = validateFields(barcode, title, weight);
+	            String errors = validateFields(barcodeValue, titleValue, weightValue);
 	            if (errors.length() > 0) {
 	              	// showInfoDialog(this, "Please fix errors", errors);  // thue: not defined
 	            	Toast.makeText(getApplicationContext(), "Please fix: " + errors, Toast.LENGTH_LONG).show();
 	            } else {
-	                mProductData.barcode = barcode;
-	                mProductData.title = title;
-	                mProductData.weight = new Integer(weight);
+	                mProductData.barcode = barcodeValue;
+	                mProductData.title = titleValue;
+	                mProductData.weight = new Integer(weightValue);
 
 	                mProductDb.insert(mProductData);	                
 	                // thue: not defined, // showInfoDialog(this, "Success", "Product saved successfully");
@@ -98,6 +106,25 @@ public class AddProduct extends Activity implements OnClickListener {
 	                resetForm();
 	            }
 	            break;
+	            
+	        case R.id.captureWeightButton:
+	           	TextView tw = (TextView) findViewById(R.id.textWeight);
+	           	String textWeight = (String) tw.getText();
+	           	mWeightEdit.setText(textWeight);
+	            break;	
+	            
+	        case R.id.titleForBarcodeButton:
+	        	Log.d(TAG, "getTitleForBarcodeButton " +  barcodeValue + " - thuesing");
+	           	
+                String titleFromDb = mProductDb.getTitleForBarcode(barcodeValue);	
+                if(titleFromDb != null && !titleFromDb.isEmpty()) {
+                	mTitleEdit.setText(titleFromDb);
+                    Toast.makeText(getApplicationContext(), "Success. Title found.", Toast.LENGTH_LONG).show();
+                } else {
+                 	Toast.makeText(getApplicationContext(), "No title found.", Toast.LENGTH_LONG).show();
+                }
+	            break;	         
+	            
         }
     }
     

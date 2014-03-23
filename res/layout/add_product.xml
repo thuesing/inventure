@@ -24,7 +24,7 @@
     
     <TableRow android:layout_marginTop="12dip">
         <Button android:text="Capture weight" 
-            android:id="@+id/captureButton" 
+            android:id="@+id/captureWeightButton" 
             android:layout_span="2" 
             android:textSize="15sp" />
     </TableRow>
@@ -56,8 +56,8 @@
     </TableRow>
     
     <TableRow android:layout_marginTop="18dip">
-        <Button android:text="Title from my data" 
-            android:id="@+id/getTitleForBarcodeButton" 
+        <Button android:text="Title for Barcode" 
+            android:id="@+id/titleForBarcodeButton" 
             android:layout_span="2" 
             android:textSize="15sp" />
     </TableRow>
