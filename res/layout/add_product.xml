@@ -67,7 +67,8 @@
             android:text="Title:" 
             android:padding="3dip" 
             android:textSize="15sp" />
-        <EditText android:id="@+id/titleEdit" android:padding="3dip" />
+        <AutoCompleteTextView android:id="@+id/titleEdit" 
+            android:padding="3dip" />
     </TableRow>
 
     <TableRow android:layout_marginTop="18dip">

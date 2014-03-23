@@ -32,20 +32,32 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 
-public class AddProduct extends Activity implements OnClickListener {
+public class AddProduct extends Activity implements OnClickListener, OnItemClickListener, OnItemSelectedListener {
 	public final static String TAG = "InventureAddProduct";
     private static final int REQUEST_BARCODE = 0;
     private static final ItemData mProductData = new ItemData();
 	private EditText mBarcodeEdit;
-	private EditText mTitleEdit;
+	private AutoCompleteTextView mTitleEdit;
 	private EditText mWeightEdit;
 	private Button mScanButton;
 	private Button mAddButton;
 	private Button mTitleForBarcodeButton;
 	private ProductDatabase mProductDb;
-
-    // private fields omitted
+    private ArrayAdapter<String> mTitleAdapter;
+	
+    //These values show in autocomplete
+    String item[]={
+              "January", "February", "March", "April",
+              "May", "June", "July", "August",
+              "September", "October", "November", "December"
+            };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +65,8 @@ public class AddProduct extends Activity implements OnClickListener {
         setContentView(R.layout.add_product);
 
         mBarcodeEdit = (EditText) findViewById(R.id.barcodeEdit);
-        mTitleEdit = (EditText) findViewById(R.id.titleEdit);
-        mWeightEdit = (EditText) findViewById(R.id.weightEdit);
+       // mTitleEdit = (EditText) findViewById(R.id.titleEdit);
+
         
         mScanButton = (Button) findViewById(R.id.scanButton);
         mScanButton.setOnClickListener(this);
@@ -63,11 +75,30 @@ public class AddProduct extends Activity implements OnClickListener {
         mTitleForBarcodeButton = (Button) findViewById(R.id.titleForBarcodeButton);
         mTitleForBarcodeButton.setOnClickListener(this);
         
-        Integer weight = getIntent().getIntExtra("com.thuesing.inventure.weight", 0);
-      	Log.d(TAG, "getIntExtra " +  weight + " - thuesing");
-      	mWeightEdit.setText(weight.toString());
+
+      	
+        // Initialize AutoCompleteTextView 
+
+      	mTitleEdit = (AutoCompleteTextView) findViewById(R.id.titleEdit);
+         
+        //Create adapter    
+      	mTitleAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line, item);
+         
+        mTitleEdit.setThreshold(1);
+         
+       //Set adapter to AutoCompleteTextView
+        mTitleEdit.setAdapter(mTitleAdapter);
+        mTitleEdit.setOnItemSelectedListener(this);
+        mTitleEdit.setOnItemClickListener(this);
+        // end AC	
         
         mProductDb = new ProductDatabase(this); 
+        
+        // Scale
+        Integer weight = getIntent().getIntExtra("com.thuesing.inventure.weight", 0);
+      	Log.d(TAG, "getIntExtra " +  weight + " - thuesing");
+        mWeightEdit = (EditText) findViewById(R.id.weightEdit);
+      	mWeightEdit.setText(weight.toString());        
         
 		initUsb();
     }
@@ -77,9 +108,7 @@ public class AddProduct extends Activity implements OnClickListener {
     	
         String barcodeValue = mBarcodeEdit.getText().toString();
         String titleValue = mTitleEdit.getText().toString();
-        String weightValue = mWeightEdit.getText().toString();
-
-    	
+        String weightValue = mWeightEdit.getText().toString();    	
     	
         switch (v.getId()) {
 	        case R.id.scanButton:
@@ -127,6 +156,35 @@ public class AddProduct extends Activity implements OnClickListener {
 	            
         }
     }
+    
+    @Override
+    public void onItemSelected(AdapterView<?> arg0, View arg1, int position,
+            long arg3) {
+        // TODO Auto-generated method stub
+        //Log.d("AutocompleteContacts", "onItemSelected() position " + position);
+    }
+ 
+    @Override
+    public void onNothingSelected(AdapterView<?> arg0) {
+        // TODO Auto-generated method stub
+         
+        InputMethodManager imm = (InputMethodManager) getSystemService(
+                INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+ 
+    }
+ 
+    @Override
+    public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+        // TODO Auto-generated method stub
+         
+        // Show Alert       
+        Toast.makeText(getBaseContext(), "Position:"+arg2+" Month:"+arg0.getItemAtPosition(arg2),
+                Toast.LENGTH_LONG).show();
+         
+        Log.d("AutocompleteContacts", "Position:"+arg2+" Month:"+arg0.getItemAtPosition(arg2));
+         
+    }    
     
 
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
