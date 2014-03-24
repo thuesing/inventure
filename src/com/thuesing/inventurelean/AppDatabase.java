@@ -87,16 +87,20 @@ public class AppDatabase {
     
     public ArrayList<String> getProductTitlesAll() { 	
     	Log.d(TAG, "getTitlesAll - thuesing");    	
-    	ArrayList titles = new ArrayList();  
     	Cursor cursor = db.rawQuery("select " + KEY_TITLE + " from " 
     								+ PRODUCT_TABLE, null);     	
-    	cursor.moveToFirst();
-    	while(!cursor.isAfterLast()) {
-    	     titles.add(cursor.getString(cursor.getColumnIndex(KEY_TITLE))); 
-    	     cursor.moveToNext();
+    	if(cursor!=null && cursor.getCount()>0) {
+        	ArrayList titles = new ArrayList();  
+	    	cursor.moveToFirst();
+	    	while(!cursor.isAfterLast()) {
+	    	     titles.add(cursor.getString(cursor.getColumnIndex(KEY_TITLE))); 
+	    	     cursor.moveToNext();
+	    	}
+	    	cursor.close();   
+	    	return titles;    	
+    	} else {
+    		return null;
     	}
-    	cursor.close();   
-    	return titles;    	
     }  
     
     

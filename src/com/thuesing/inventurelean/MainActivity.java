@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import com.google.zxing.integration.android.IntentIntegrator;
 import com.thuesing.inventurelean.AppDatabase.ItemData;
 
 import android.os.Build;
@@ -38,7 +39,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 public class MainActivity extends Activity implements OnClickListener, OnItemClickListener, OnItemSelectedListener {
-	public final static String TAG = "InventureAddProduct";
+	public final static String TAG = "MainActivity";
     private static final int REQUEST_BARCODE = 0;
     private static final ItemData mProductData = new ItemData();
 	private EditText mBarcodeEdit;
@@ -50,6 +51,7 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 	private AppDatabase mProductDb;
     private ArrayAdapter<String> mTitleAdapter;
     private ArrayList<String> mTitles;
+    private IntentIntegrator scanIntegrator;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,9 +103,15 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
     	
         switch (v.getId()) {
 	        case R.id.scanButton:
+	        	/*
 	            Intent intent = new Intent("com.google.zxing.client.android.SCAN");
 	            intent.putExtra("SCAN_MODE", "PRODUCT_MODE");
 	            startActivityForResult(intent, REQUEST_BARCODE);
+	            */
+		        scanIntegrator = new IntentIntegrator(MainActivity.this);
+		        //scanIntegrator.addExtra(Utils.EXTRA_MODE, "find"); 
+		        scanIntegrator.initiateScan();	
+		        
 	            break;
 	            
 	        case R.id.addButton:
@@ -134,8 +142,7 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 	            break;	
 	        */    
 	        case R.id.titleForBarcodeButton:
-	        	Log.d(TAG, "getTitleForBarcodeButton " +  barcodeValue + " - thuesing");
-	           	
+	        	Log.d(TAG, "getTitleForBarcodeButton " +  barcodeValue + " - thuesing");	           	
                 String titleFromDb = mProductDb.getProducTitleForBarcode(barcodeValue);	
                 if(titleFromDb != null && !titleFromDb.isEmpty()) {
                 	mTitleEdit.setText(titleFromDb);
@@ -143,7 +150,7 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
                 } else {
                  	Toast.makeText(getApplicationContext(), "No title found.", Toast.LENGTH_LONG).show();
                 }
-	            break;	         
+	            break;	        
 	            
         }
     }
@@ -174,6 +181,7 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         if (requestCode == REQUEST_BARCODE) {
             if (resultCode == RESULT_OK) {
+            	Log.d(TAG, "Scan result OK");
                 String barcode = intent.getStringExtra("SCAN_RESULT");
                 mBarcodeEdit.setText(barcode);
                 // String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
@@ -183,6 +191,7 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
             }
         }
     }
+	
     
     private static String validateFields(String barcode, String title, String weight) {
 	    StringBuilder errors = new StringBuilder();
