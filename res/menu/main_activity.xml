@@ -9,10 +9,10 @@
         android:id="@+id/show_data"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="Show inventur data"/>
+        android:title="Show inventory data"/>
     <item
         android:id="@+id/show_products"
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="Show product data"/>
+        android:title="Show stock data"/>
 </menu>

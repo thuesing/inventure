@@ -125,9 +125,9 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 	                mProductData.title = titleValue;
 	                mProductData.weight = new Integer(weightValue);
 	                if(mProductDb.insertInventurData(mProductData) == true) {	                
-	                	Toast.makeText(getApplicationContext(), "Success: Data saved successfully", Toast.LENGTH_LONG).show();
+	                	Toast.makeText(getApplicationContext(), "Success: Data saved successfully.", Toast.LENGTH_LONG).show();
 	                } else {
-	                	Toast.makeText(getApplicationContext(), "Failure: Sorry, something  went wrong", Toast.LENGTH_LONG).show();
+	                	Toast.makeText(getApplicationContext(), "Error: Data coul not be saved.", Toast.LENGTH_LONG).show();
 	                }	                
 	                resetForm();
 	                
@@ -167,8 +167,7 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
     public void onNothingSelected(AdapterView<?> arg0) {
         // TODO Auto-generated method stub         
         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
- 
+        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0); 
     }
  
     @Override
@@ -179,19 +178,19 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
     
 
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        if (requestCode == REQUEST_BARCODE) {
+        //if (requestCode == REQUEST_BARCODE) {
             if (resultCode == RESULT_OK) {
             	Log.d(TAG, "Scan result OK");
                 String barcode = intent.getStringExtra("SCAN_RESULT");
                 mBarcodeEdit.setText(barcode);
                 // String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
                 // mFormatEdit.setText(format);
-            } else if (resultCode == RESULT_CANCELED) {
+                mTitleEdit.requestFocus();
+            } else if (resultCode == RESULT_CANCELED) {          
                 finish();
             }
-        }
+        //}
     }
-	
     
     private static String validateFields(String barcode, String title, String weight) {
 	    StringBuilder errors = new StringBuilder();
@@ -223,7 +222,7 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
     
  	public boolean onCreateOptionsMenu(Menu menu) {
  		// Inflate the menu; this adds items to the action bar if it is present.
- 		getMenuInflater().inflate(R.menu.add_product, menu);		
+ 		getMenuInflater().inflate(R.menu.main_activity, menu);		
  		return true;
  	} 
  	

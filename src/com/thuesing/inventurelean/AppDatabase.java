@@ -92,19 +92,19 @@ public class AppDatabase {
     public ArrayList<String> getProductTitlesAll() { 	
     	Log.d(TAG, "getTitlesAll - thuesing");    	
     	Cursor cursor = db.rawQuery("select " + KEY_TITLE + " from " 
-    								+ PRODUCT_TABLE, null);     	
-    	if(cursor!=null && cursor.getCount()>0) {
-        	ArrayList titles = new ArrayList();  
+    								+ PRODUCT_TABLE, null);    
+    	
+    	ArrayList titles = new ArrayList();  
+    	
+    	if(cursor!=null && cursor.getCount()>0) {        	
 	    	cursor.moveToFirst();
 	    	while(!cursor.isAfterLast()) {
 	    	     titles.add(cursor.getString(cursor.getColumnIndex(KEY_TITLE))); 
 	    	     cursor.moveToNext();
 	    	}
-	    	cursor.close();   
-	    	return titles;    	
-    	} else {
-    		return null;
-    	}
+	    	cursor.close();   	    	   	
+    	} 
+    	return titles; // return empty list for Adapter count
     }  
     
     

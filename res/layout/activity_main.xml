@@ -1,42 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
-    android:orientation="vertical"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:id="@+id/mainLayout"
+    android:layout_height="fill_parent" 
     android:layout_width="fill_parent" 
-    android:layout_height="fill_parent">
+    android:stretchColumns="1">
 
-    <TextView android:id="@+id/spotPayLabel" 
-        android:text="Inventure Menu" 
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textSize="26sp" 
-        android:padding="6dip" 
-        android:textStyle="bold" />
-    <TextView
-        android:id="@+id/textWeight"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical|center_horizontal|center"
-        android:textSize="@dimen/big_font"
-        android:textStyle="bold"
-        android:text="Place item on the scale" />
+  <!--   Scale deactivated
+    <TableRow android:layout_marginBottom="12dip">    
+        <TextView android:id="@+id/scaleWeightLabel" 
+            android:text="Weight from scale:" 
+            android:padding="3dip" 
+            android:textSize="15sp" />        
+        <TextView
+	        android:id="@+id/textWeight"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:gravity="center_vertical|center_horizontal|center"
+	        android:textSize="15sp"
+	        android:padding="6dip"
+	        android:textStyle="bold"
+	        android:text="No scale" />
+    </TableRow>
+    
+    <TableRow android:layout_marginTop="12dip">
+        <Button android:text="Capture weight" 
+            android:id="@+id/captureWeightButton" 
+            android:layout_span="2" 
+            android:textSize="15sp" />
+    </TableRow>
+   -->
+ 
+    <TableRow>
 
-    <Button android:id="@+id/addProductButton"
-        android:text="Add Product" 
-        android:layout_width="fill_parent"    
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:layout_marginTop="18dip"/>
-     
-    <Button
-        android:id="@+id/showProductListButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Show Data" 
-        android:onClick="showProductList" />
-     
-    <Button
-        android:id="@+id/exportProductListButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Export CSV"/>
-</LinearLayout>
+        <TextView android:id="@+id/barcodeLabel" 
+            android:text="Barcode:" 
+            android:padding="3dip"
+            android:textSize="15sp" />
+
+        <EditText android:id="@+id/barcodeEdit" 
+            android:inputType="number"
+            android:layout_width="fill_parent"
+    		android:layout_height="wrap_content"
+            android:padding="3dip" />
+    </TableRow>
+
+    <TableRow android:layout_marginTop="6dip">
+        <TextView android:id="@+id/titleLabel" 
+            android:text="Name:" 
+            android:padding="3dip" 
+            android:textSize="15sp" />
+        <AutoCompleteTextView android:id="@+id/titleEdit" 
+            android:inputType="textCapWords"
+            android:padding="3dip" />
+    </TableRow>
+    
+   <TableRow android:layout_marginTop="6dip">
+        <TextView android:id="@+id/weightLabel" 
+            android:text="Weight (gr/ml):" 
+            android:padding="3dip" 
+            android:textSize="15sp" />
+        <EditText android:id="@+id/weightEdit" 
+            android:inputType="number"
+            android:padding="3dip" />
+    </TableRow>    
+    <TableRow android:layout_marginTop="18dip">
+        <Button android:text="Start Scanner" 
+            android:id="@+id/scanButton" 
+            android:layout_span="2" 
+            android:textSize="15sp" />
+    </TableRow>
+    <TableRow android:layout_marginTop="18dip">
+        <Button android:text="Title for Barcode" 
+            android:id="@+id/titleForBarcodeButton" 
+            android:layout_span="2" 
+            android:textSize="15sp"/>
+    </TableRow>
+    <TableRow android:layout_marginTop="18dip">
+        <Button android:text="Save data" 
+           android:id="@+id/addButton"
+           android:layout_span="2"
+           android:textSize="15sp" 
+           android:padding="3dip" />
+    </TableRow>
+</TableLayout>

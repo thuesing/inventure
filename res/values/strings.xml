@@ -5,8 +5,8 @@
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_add_product">Enter data</string>
-    <string name="title_data_list_view">Your data</string>
-    <string name="title_product_list_view">Your products</string>
+    <string name="title_data_list_view">Your inventory data</string>
+    <string name="title_product_list_view">Your product stock</string>
     <string name="no_data">No data</string>
     <string name="button_list">Show your items</string>
     <string name="title_activity_export_csv">Export data</string>
