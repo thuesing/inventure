@@ -56,7 +56,7 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_product);
+        setContentView(R.layout.activity_main);
         
         mProductDb = new AppDatabase(this); 
 
@@ -204,10 +204,11 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 	        errors.append("Title required\n");
 	    }
 
+	    /*
 	    if (!weight.matches("^-?\\d+(.\\d+)?$")) {
 	        errors.append("Need numeric weight\n");
 	    }
-
+        */
 	    return errors.toString();
     }
     

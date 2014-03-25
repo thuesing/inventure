@@ -77,12 +77,16 @@ public class AppDatabase {
   
     	Cursor cursor = db.rawQuery("select " + KEY_TITLE + " from " 
     								+ PRODUCT_TABLE + " where " 
-    								+ KEY_BARCODE + " = ?", new String[] { barcode.trim() });     	
-    	cursor.moveToFirst();    	
-    	int columnIndex = cursor.getColumnIndexOrThrow(KEY_TITLE);    	
-    	String title = cursor.getString(columnIndex);    	
-    	cursor.close();
-    	return title;    	
+    								+ KEY_BARCODE + " = ?", new String[] { barcode.trim() });   
+    	if(cursor!=null && cursor.getCount()>0) {
+	    	cursor.moveToFirst();    	
+	    	int columnIndex = cursor.getColumnIndexOrThrow(KEY_TITLE);    	
+	    	String title = cursor.getString(columnIndex);    	
+	    	cursor.close();
+	    	return title;  
+    	} else {
+    		return null;
+    	}	
     }
     
     public ArrayList<String> getProductTitlesAll() { 	

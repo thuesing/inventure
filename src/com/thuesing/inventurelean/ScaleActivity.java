@@ -54,7 +54,7 @@ public class ScaleActivity extends Activity implements OnClickListener, OnItemCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_product);
+        setContentView(R.layout.activity_main);
         
         mProductDb = new AppDatabase(this); 
 
