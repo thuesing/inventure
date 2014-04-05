@@ -67,9 +67,10 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
         mScanButton.setOnClickListener(this);
         mAddButton = (Button) findViewById(R.id.addButton);
         mAddButton.setOnClickListener(this);
+        /*
         mTitleForBarcodeButton = (Button) findViewById(R.id.titleForBarcodeButton);
         mTitleForBarcodeButton.setOnClickListener(this);       
-      	
+      	*/
         // Initialize AutoCompleteTextView 
 
       	mTitleEdit = (AutoCompleteTextView) findViewById(R.id.titleEdit);
@@ -140,7 +141,7 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 	           	String textWeight = (String) tw.getText();
 	           	mWeightEdit.setText(textWeight);
 	            break;	
-	        */    
+ 
 	        case R.id.titleForBarcodeButton:
 	        	Log.d(TAG, "getTitleForBarcodeButton " +  barcodeValue + " - thuesing");	           	
                 String titleFromDb = mProductDb.getProducTitleForBarcode(barcodeValue);	
@@ -151,7 +152,7 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
                  	Toast.makeText(getApplicationContext(), "No title found.", Toast.LENGTH_LONG).show();
                 }
 	            break;	        
-	            
+	         */
         }
     }
     
@@ -174,8 +175,7 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
     public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
         // TODO Auto-generated method stub      
         Log.d(TAG, "onItemSelected: " + arg0.getItemAtPosition(arg2)  + " - thuesing");         
-    }    
-    
+    }       
 
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         //if (requestCode == REQUEST_BARCODE) {
@@ -185,7 +185,7 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
                 mBarcodeEdit.setText(barcode);
                 // String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
                 // mFormatEdit.setText(format);
-                mTitleEdit.requestFocus();
+                this.titleForBarcode(barcode) ;
             } else if (resultCode == RESULT_CANCELED) {          
             	Toast.makeText(getApplicationContext(), "Barcode scan cancelled.", Toast.LENGTH_LONG).show();
             }
@@ -210,14 +210,23 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 	    return errors.toString();
     }
     
-    private void resetForm() {
-    	
+    private void resetForm() {    	
         mBarcodeEdit.setText(""); 
         mWeightEdit.setText(""); 
-        mTitleEdit.setText(""); 
-	
+        mTitleEdit.setText(""); 	
 	}
     
+    private void titleForBarcode(String barcodeValue) {
+    	Log.d(TAG, "titleForBarcode" +  barcodeValue + " - thuesing");	           	
+        String titleFromDb = mProductDb.getProducTitleForBarcode(barcodeValue);	
+        if(titleFromDb != null && !titleFromDb.isEmpty()) {
+        	mTitleEdit.setText(titleFromDb);
+        	mWeightEdit.requestFocus(); // title set, next field
+        } else {
+            mTitleEdit.requestFocus();  // insert title
+        }
+        
+    }    
     
  	public boolean onCreateOptionsMenu(Menu menu) {
  		// Inflate the menu; this adds items to the action bar if it is present.

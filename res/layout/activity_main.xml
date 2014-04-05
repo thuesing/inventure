@@ -69,12 +69,14 @@
             android:layout_span="2" 
             android:textSize="15sp" />
     </TableRow>
+    <!-- 
     <TableRow android:layout_marginTop="18dip">
         <Button android:text="Title for Barcode" 
             android:id="@+id/titleForBarcodeButton" 
             android:layout_span="2" 
             android:textSize="15sp"/>
     </TableRow>
+    -->
     <TableRow android:layout_marginTop="18dip">
         <Button android:text="Save data" 
            android:id="@+id/addButton"

@@ -65,8 +65,8 @@ public class ScaleActivity extends Activity implements OnClickListener, OnItemCl
         mScanButton.setOnClickListener(this);
         mAddButton = (Button) findViewById(R.id.addButton);
         mAddButton.setOnClickListener(this);
-        mTitleForBarcodeButton = (Button) findViewById(R.id.titleForBarcodeButton);
-        mTitleForBarcodeButton.setOnClickListener(this);       
+        //mTitleForBarcodeButton = (Button) findViewById(R.id.titleForBarcodeButton);
+        //mTitleForBarcodeButton.setOnClickListener(this);       
       	
         // Initialize AutoCompleteTextView 
 
@@ -131,7 +131,7 @@ public class ScaleActivity extends Activity implements OnClickListener, OnItemCl
 	           	String textWeight = (String) tw.getText();
 	           	mWeightEdit.setText(textWeight);
 	            break;	
-	        */    
+	          
 	        case R.id.titleForBarcodeButton:
 	        	Log.d(TAG, "getTitleForBarcodeButton " +  barcodeValue + " - thuesing");
 	           	
@@ -143,7 +143,7 @@ public class ScaleActivity extends Activity implements OnClickListener, OnItemCl
                  	Toast.makeText(getApplicationContext(), "No title found.", Toast.LENGTH_LONG).show();
                 }
 	            break;	         
-	            
+	           */   
         }
     }
     
