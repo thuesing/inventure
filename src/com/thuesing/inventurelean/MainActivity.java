@@ -187,7 +187,7 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
                 // mFormatEdit.setText(format);
                 mTitleEdit.requestFocus();
             } else if (resultCode == RESULT_CANCELED) {          
-                finish();
+            	Toast.makeText(getApplicationContext(), "Barcode scan cancelled.", Toast.LENGTH_LONG).show();
             }
         //}
     }
