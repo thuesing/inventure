@@ -125,12 +125,12 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 	                mProductData.title = titleValue;
 	                mProductData.weight = new Integer(weightValue);
 	                if(mProductDb.insertInventurData(mProductData) == true) {	                
-	                	Toast.makeText(getApplicationContext(), "Success: Data saved successfully.", Toast.LENGTH_LONG).show();
+	                	Toast.makeText(getApplicationContext(), "Success: Data saved.", Toast.LENGTH_LONG).show();
 	                } else {
-	                	Toast.makeText(getApplicationContext(), "Error: Data coul not be saved.", Toast.LENGTH_LONG).show();
+	                	Toast.makeText(getApplicationContext(), "Error: Data could not be saved.", Toast.LENGTH_LONG).show();
 	                }	                
 	                resetForm();
-	                
+	                mTitleAdapter.add(titleValue);
 	                mTitleAdapter.notifyDataSetChanged();
 	            }
 	            break;
@@ -203,11 +203,10 @@ public class MainActivity extends Activity implements OnClickListener, OnItemCli
 	        errors.append("Title required\n");
 	    }
 
-	    /*
 	    if (!weight.matches("^-?\\d+(.\\d+)?$")) {
 	        errors.append("Need numeric weight\n");
 	    }
-        */
+
 	    return errors.toString();
     }
     
